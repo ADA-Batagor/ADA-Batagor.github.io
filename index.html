@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Day — The camera that lets your photos go</title>
+<meta name="description" content="A Day is a privacy-first camera app that auto-deletes your photos after 24 hours. No cloud. No analytics. No clutter.">
+
+<!-- ============================================================
+  CONFIG: swap these two values once assets/link are ready.
+============================================================ -->
+<script>
+  const APP_STORE_URL = "#"; // TODO: replace with real App Store link
+  const RATING = "5.0";      // App Store rating shown in social proof
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --void: #14110F;
+    --void-soft: #1D1A16;
+    --safelight: #C1440E;
+    --safelight-dim: #7A2C0C;
+    --paper: #F2EFE9;
+    --paper-dim: #EAE5DA;
+    --ash: #8A8378;
+    --ash-soft: #56504A;
+    --radius: 2px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin: 0;
+    background: var(--void);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .mono{
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  a{ color: inherit; }
+
+  :focus-visible{
+    outline: 2px solid var(--safelight);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(20, 17, 15, 0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(242,239,233,0.08);
+  }
+  .header-inner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+  }
+  .logo{
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+  .logo-dot{
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--safelight);
+    display: inline-block;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%, 100%{ opacity: 1; }
+    50%{ opacity: 0.35; }
+  }
+  .btn{
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    display: inline-block;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .btn-primary{
+    background: var(--safelight);
+    color: var(--paper);
+  }
+  .btn-primary:hover{
+    background: #D9520F;
+    transform: translateY(-1px);
+  }
+  .btn-ghost{
+    border: 1px solid rgba(242,239,233,0.25);
+    color: var(--paper);
+  }
+  .btn-ghost:hover{
+    border-color: var(--paper);
+  }
+  .btn-small{
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding: 96px 0 80px;
+  }
+  .hero-grid{
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--safelight);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .eyebrow::before{
+    content: "";
+    width: 24px;
+    height: 1px;
+    background: var(--safelight);
+  }
+  .hero h1{
+    font-size: clamp(36px, 5vw, 58px);
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+  .hero h1 em{
+    font-style: italic;
+    color: var(--ash);
+  }
+  .hero p{
+    font-size: 17px;
+    color: var(--ash);
+    max-width: 460px;
+    margin-bottom: 36px;
+  }
+  .cta-row{
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .rating-inline{
+    font-size: 13px;
+    color: var(--ash);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .rating-inline .stars{ color: var(--safelight); letter-spacing: 1px; }
+
+  /* ---------- Hero visual: fading polaroid ---------- */
+  .darkroom{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 420px;
+  }
+  .polaroid{
+    width: 220px;
+    background: var(--paper);
+    padding: 16px 16px 48px;
+    border-radius: 3px;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6);
+    transform: rotate(-4deg);
+    position: relative;
+  }
+  .polaroid-frame{
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: linear-gradient(135deg, #3a2f28, #1c1613);
+    position: relative;
+    overflow: hidden;
+    border-radius: 1px;
+  }
+  .polaroid-frame::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(242,239,233,0.5), transparent 45%),
+      linear-gradient(200deg, #6b4a35, #2a2016 70%);
+    animation: fade-cycle 6s ease-in-out infinite;
+  }
+  @keyframes fade-cycle{
+    0%{ opacity: 1; }
+    55%{ opacity: 1; }
+    85%{ opacity: 0.06; }
+    100%{ opacity: 0.06; }
+  }
+  .polaroid-cap{
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ash-soft);
+  }
+  .timer-badge{
+    position: absolute;
+    bottom: -18px;
+    right: -18px;
+    background: var(--void-soft);
+    border: 1px solid rgba(242,239,233,0.15);
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--safelight);
+    box-shadow: 0 12px 30px -10px rgba(0,0,0,0.5);
+  }
+  .timer-badge span{ color: var(--ash); font-size: 10px; display: block; letter-spacing: 0.05em; }
+
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .darkroom{ height: 340px; order: -1; margin-bottom: 12px; }
+  }
+
+  /* ---------- Problem section ---------- */
+  .section{
+    padding: 88px 0;
+    border-top: 1px solid rgba(242,239,233,0.08);
+  }
+  .section-label{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ash-soft);
+    margin-bottom: 16px;
+  }
+  .problem-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .problem-grid h2{
+    font-size: clamp(28px, 3.4vw, 38px);
+    line-height: 1.2;
+  }
+  .stat-card{
+    background: var(--void-soft);
+    border: 1px solid rgba(242,239,233,0.08);
+    padding: 40px;
+    border-radius: var(--radius);
+  }
+  .stat-number{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 52px;
+    color: var(--safelight);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .stat-caption{
+    color: var(--ash);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  @media (max-width: 860px){
+    .problem-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- How it works: real timeline ---------- */
+  .timeline{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+    margin-top: 48px;
+  }
+  .timeline::before{
+    content: "";
+    position: absolute;
+    top: 11px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: repeating-linear-gradient(to right, rgba(242,239,233,0.2) 0, rgba(242,239,233,0.2) 6px, transparent 6px, transparent 12px);
+  }
+  .tl-step{
+    padding-right: 32px;
+  }
+  .tl-mark{
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--void);
+    border: 1px solid var(--safelight);
+    color: var(--safelight);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 2;
+  }
+  .tl-step h3{
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .tl-step p{
+    color: var(--ash);
+    font-size: 14.5px;
+    margin: 0;
+  }
+  .tl-time{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ash-soft);
+    margin-bottom: 6px;
+    display: block;
+  }
+  @media (max-width: 860px){
+    .timeline{ grid-template-columns: 1fr; gap: 32px; }
+    .timeline::before{ display: none; }
+    .tl-step{ padding-right: 0; }
+  }
+
+  /* ---------- Privacy section ---------- */
+  .privacy-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(242,239,233,0.08);
+    border: 1px solid rgba(242,239,233,0.08);
+    margin-top: 40px;
+  }
+  .privacy-item{
+    background: var(--void);
+    padding: 32px 28px;
+  }
+  .privacy-item h3{
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .privacy-item p{
+    color: var(--ash);
+    font-size: 13.5px;
+    margin: 0;
+  }
+  @media (max-width: 860px){
+    .privacy-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Final CTA ---------- */
+  .final-cta{
+    text-align: center;
+    padding: 100px 0;
+  }
+  .final-cta h2{
+    font-size: clamp(30px, 4.4vw, 46px);
+    max-width: 620px;
+    margin: 0 auto 32px;
+    line-height: 1.15;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top: 1px solid rgba(242,239,233,0.08);
+    padding: 32px 0;
+  }
+  .footer-inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--ash-soft);
+  }
+  .footer-inner a{
+    text-decoration: none;
+    color: var(--ash);
+  }
+  .footer-inner a:hover{ color: var(--paper); }
+  .footer-links{ display: flex; gap: 20px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-inner">
+    <a href="#" class="logo"><span class="logo-dot"></span>A Day</a>
+    <a href="#download" class="btn btn-primary btn-small">Get the app</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Auto-deletes in 24 hours</div>
+      <h1>Take the photo.<br><em>Forget it exists.</em></h1>
+      <p>A Day is a camera app built to disappear. Every photo you take is gone in 24 hours — no cloud backup, no analytics, nothing kept but the moment itself.</p>
+      <div class="cta-row">
+        <a href="#" id="cta-hero" class="btn btn-primary">Download on the App Store</a>
+        <span class="rating-inline"><span class="stars">★★★★★</span> <span id="rating-text">5.0 on the App Store</span></span>
+      </div>
+    </div>
+    <div class="darkroom" aria-hidden="true">
+      <div class="polaroid">
+        <div class="polaroid-frame"></div>
+        <div class="polaroid-cap">
+          <span>A DAY</span>
+          <span id="date-stamp">19.07.2026</span>
+        </div>
+        <div class="timer-badge">
+          <span>DELETES IN</span>
+          <span id="countdown" class="mono">23:59:41</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap problem-grid">
+    <div>
+      <div class="section-label">The problem</div>
+      <h2>Your camera roll isn't a memory.<br>It's landfill.</h2>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">10,000+</div>
+      <div class="stat-caption">photos sitting in the average camera roll — screenshots, duplicates, receipts, half-finished memes — that nobody will ever open again. A Day starts every day at zero.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-label">How it works</div>
+    <h2>Three steps. All of them automatic.</h2>
+    <div class="timeline">
+      <div class="tl-step">
+        <div class="tl-mark">1</div>
+        <span class="tl-time">00:00</span>
+        <h3>Capture</h3>
+        <p>Shoot like normal. Full resolution, flash, custom controls — it's still a real camera.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-mark">2</div>
+        <span class="tl-time">00:00 – 24:00</span>
+        <h3>Review window</h3>
+        <p>Look back, share, or save the few that matter to your permanent gallery. Everything else just sits, untouched.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-mark">3</div>
+        <span class="tl-time">24:00</span>
+        <h3>Gone</h3>
+        <p>Anything you didn't save is deleted automatically. Not archived, not hidden — deleted.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-label">Privacy, by construction</div>
+    <h2>We built A Day to know nothing about you.</h2>
+    <div class="privacy-grid">
+      <div class="privacy-item">
+        <h3>No analytics</h3>
+        <p>We don't track how you use the app. There's no dashboard on our end to see — on purpose.</p>
+      </div>
+      <div class="privacy-item">
+        <h3>No cloud copy</h3>
+        <p>Your photos stay on your device. Nothing is uploaded, synced, or backed up anywhere by us.</p>
+      </div>
+      <div class="privacy-item">
+        <h3>No data collected</h3>
+        <p>No account, no email, no ad ID. There's simply nothing about you for us to keep.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="wrap">
+    <h2>Your next photo can be the last thing you have to think about.</h2>
+    <a href="#" id="cta-final" class="btn btn-primary" style="font-size:16px; padding:14px 28px;">Download on the App Store</a>
+  </div>
+</section>
+
+<footer id="download">
+  <div class="wrap footer-inner">
+    <span>© 2026 A Day — made by Batagor</span>
+    <div class="footer-links">
+      <a href="https://github.com/ADA-Batagor/batagor" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://instagram.com/preventdigitalwaste" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Wire up App Store links
+  document.getElementById('cta-hero').href = APP_STORE_URL;
+  document.getElementById('cta-final').href = APP_STORE_URL;
+  document.getElementById('rating-text').textContent = RATING + " on the App Store";
+
+  // Live date stamp
+  document.getElementById('date-stamp').textContent =
+    new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '.');
+
+  // Decorative countdown — loops a 24h cycle compressed for visual effect only, not real time
+  const countdownEl = document.getElementById('countdown');
+  let secondsLeft = 24 * 60 * 60 - 19;
+  function formatTime(s){
+    const h = String(Math.floor(s / 3600)).padStart(2, '0');
+    const m = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+    const sec = String(s % 60).padStart(2, '0');
+    return `${h}:${m}:${sec}`;
+  }
+  countdownEl.textContent = formatTime(secondsLeft);
+  setInterval(() => {
+    secondsLeft = secondsLeft <= 0 ? 24 * 60 * 60 : secondsLeft - 47; // ticks fast for visual interest
+    countdownEl.textContent = formatTime(secondsLeft);
+  }, 1200);
+</script>
+
+</body>
+</html>
