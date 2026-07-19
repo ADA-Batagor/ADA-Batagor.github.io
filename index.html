@@ -82,6 +82,10 @@
   }
   .btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(13,37,83,0.55); }
   .btn-small{ font-size: 13.5px; padding: 9px 18px; }
+  .badge-link{ display: inline-block; line-height: 0; transition: transform 0.15s ease; }
+  .badge-link img{ height: 44px; width: auto; display: block; }
+  .badge-link:hover{ transform: translateY(-2px); }
+  .badge-link.large img{ height: 52px; }
 
   .hero{ padding: 88px 0 72px; position: relative; overflow: hidden; }
   .hero-glow{
@@ -255,7 +259,7 @@
       <h1>A fresh roll,<br><span class="accent">every day.</span></h1>
       <p class="lede">A Day is a camera that doesn't hang onto anything. Snap all you want — every photo disappears after 24 hours, unless you decide to keep it. No cloud, no tracking, nothing kept but the moment.</p>
       <div class="cta-row">
-        <a href="#" id="cta-hero" class="btn btn-primary">Download on the App Store</a>
+        <a href="#" id="cta-hero" class="badge-link"><img src="assets/app-store-badge.svg" alt="Download on the App Store"></a>
         <span class="rating-inline"><span class="stars">★★★★★</span> <span id="rating-text">5.0 on the App Store</span></span>
       </div>
     </div>
@@ -338,7 +342,7 @@
   <div class="final-glow" aria-hidden="true"></div>
   <div class="wrap">
     <h2>Ready for a lighter roll? Today's the best day to start.</h2>
-    <a href="#" id="cta-final" class="btn btn-primary" style="font-size:16px; padding:15px 30px;">Download on the App Store</a>
+    <a href="#" id="cta-final" class="badge-link large"><img src="assets/app-store-badge.svg" alt="Download on the App Store"></a>
   </div>
 </section>
 
