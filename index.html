@@ -131,34 +131,13 @@
     border-radius: 26px;
     overflow: hidden;
     position: relative;
-    background: linear-gradient(200deg, var(--yellow) 0%, var(--blue) 55%, var(--blue-deep) 100%);
+    background: var(--cream);
   }
-  .sun-wrap{
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .sun-core{
-    width: 84px; height: 84px; border-radius: 50%;
-    background: var(--cream-soft);
-    position: relative;
-    animation: rise 5s ease-in-out infinite;
-  }
-  @keyframes rise{
-    0%, 100%{ transform: translateY(6px); }
-    50%{ transform: translateY(-6px); }
-  }
-  .ray{
-    position: absolute; left: 50%; top: 50%;
-    width: 5px; height: 26px; border-radius: 3px;
-    background: var(--cream-soft);
-    transform-origin: 50% 62px;
-    opacity: 0.9;
-  }
-  .phone-cap{
-    position: absolute; bottom: 18px; left: 18px; right: 18px;
-    display: flex; justify-content: space-between; align-items: center;
-    font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600;
-    color: var(--cream-soft); z-index: 2;
+  .phone-screen img{
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
   }
   .timer-pill{
     position: absolute; bottom: -16px; right: -14px;
@@ -283,26 +262,11 @@
     <div class="stage" aria-hidden="true">
       <div class="phone">
         <div class="phone-screen">
-          <div class="sun-wrap">
-            <div class="sun-core">
-              <div class="ray" style="transform: translate(-50%,-50%) rotate(0deg);"></div>
-              <div class="ray" style="transform: translate(-50%,-50%) rotate(45deg);"></div>
-              <div class="ray" style="transform: translate(-50%,-50%) rotate(90deg);"></div>
-              <div class="ray" style="transform: translate(-50%,-50%) rotate(135deg);"></div>
-              <div class="ray" style="transform: translate(-50%,-50%) rotate(180deg);"></div>
-              <div class="ray" style="transform: translate(-50%,-50%) rotate(225deg);"></div>
-              <div class="ray" style="transform: translate(-50%,-50%) rotate(270deg);"></div>
-              <div class="ray" style="transform: translate(-50%,-50%) rotate(315deg);"></div>
-            </div>
-          </div>
-          <div class="phone-cap">
-            <span>A DAY</span>
-            <span id="date-stamp">19.07.2026</span>
-          </div>
+          <img src="assets/screenshot-detail.png" alt="A Day app showing a photo with a countdown until it's automatically deleted">
         </div>
         <div class="timer-pill">
-          <span>Deletes in</span>
-          <span id="countdown">23:59:41</span>
+          <span>Time left</span>
+          22 hours
         </div>
       </div>
     </div>
@@ -392,23 +356,6 @@
   document.getElementById('cta-hero').href = APP_STORE_URL;
   document.getElementById('cta-final').href = APP_STORE_URL;
   document.getElementById('rating-text').textContent = RATING + " on the App Store";
-
-  document.getElementById('date-stamp').textContent =
-    new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '.');
-
-  const countdownEl = document.getElementById('countdown');
-  let secondsLeft = 24 * 60 * 60 - 19;
-  function formatTime(s){
-    const h = String(Math.floor(s / 3600)).padStart(2, '0');
-    const m = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
-    const sec = String(s % 60).padStart(2, '0');
-    return `${h}:${m}:${sec}`;
-  }
-  countdownEl.textContent = formatTime(secondsLeft);
-  setInterval(() => {
-    secondsLeft = secondsLeft <= 0 ? 24 * 60 * 60 : secondsLeft - 47;
-    countdownEl.textContent = formatTime(secondsLeft);
-  }, 1200);
 </script>
 
 </body>
