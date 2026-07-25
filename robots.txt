@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ada-batagor.github.io/sitemap.xml
