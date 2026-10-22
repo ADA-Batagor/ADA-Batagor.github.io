@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support — Batu</title>
+<meta name="description" content="Get help with Batu, the app that sets aside storage you can release at any time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream: #faf4e6;
+    --ink: #1c1c1c;
+    --ink-soft: #53514d;
+    --blue-deep: #0d2553;
+  }
+  *{ box-sizing: border-box; }
+  body{
+    margin: 0; background: var(--cream); color: var(--ink);
+    font-family: 'Inter', sans-serif; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2{ font-family: 'Space Grotesk', sans-serif; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  a{ color: var(--blue-deep); }
+  :focus-visible{ outline: 2px solid var(--blue-deep); outline-offset: 3px; }
+  .wrap{ max-width: 720px; margin: 0 auto; padding: 0 24px; }
+  header{ border-bottom: 1px solid rgba(28,28,28,0.06); }
+  .header-inner{ display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 720px; margin: 0 auto; }
+  .brand{ font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 19px; color: var(--ink); text-decoration: none; }
+  main{ padding: 56px 0 72px; }
+  h1{ font-size: 36px; line-height: 1.15; margin-bottom: 8px; }
+  h2{ font-size: 21px; margin: 36px 0 8px; }
+  p, li{ font-size: 16px; }
+  p{ margin: 0 0 14px; }
+  ul{ padding-left: 22px; margin: 0 0 14px; }
+  li{ margin-bottom: 6px; }
+  .meta{ color: var(--ink-soft); font-size: 14px; margin-bottom: 28px; }
+  footer{ border-top: 1px solid rgba(28,28,28,0.07); padding: 30px 0; }
+  .footer-inner{ display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; font-size: 13px; color: var(--ink-soft); }
+  .footer-inner a{ text-decoration: none; color: var(--ink-soft); }
+  .footer-inner a:hover{ color: var(--ink); }
+  @media (max-width: 480px){
+    .wrap{ padding: 0 18px; }
+    .header-inner{ padding: 12px 18px; }
+    h1{ font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="brand">Batu</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Batu Support</h1>
+  <p class="meta">iPhone, iPad and Mac</p>
+
+  <p>Batu lets you set aside storage as a reserve, then release it at any time to free up space instantly. The reserve is a placeholder file inside the app, so releasing it simply deletes that file.</p>
+
+  <h2>How do I reserve storage?</h2>
+  <p>Open Batu, choose how much storage to set aside, and confirm. Batu creates the reserve file inside its own container.</p>
+
+  <h2>How do I release it?</h2>
+  <p>Open Batu and release the reserve. The file is deleted and the space becomes available again.</p>
+
+  <h2>I released the reserve, but my free space didn't go up right away. Why?</h2>
+  <p>Some of the space may be held by APFS snapshots, such as Time Machine local snapshots on a Mac. The space is freed once those snapshots are removed, which the system usually does on its own.</p>
+
+  <h2>Where is the reserve stored?</h2>
+  <p>It's a single file inside Batu's own container. It is deleted when you release the reserve, and also when you delete the app. Batu never touches your photos or other files. See the <a href="/batu/privacy/">Privacy Policy</a>.</p>
+
+  <h2>Contact</h2>
+  <p>Need help? Email <a href="mailto:btgr.dev@gmail.com?subject=Batu%20support">btgr.dev@gmail.com</a> (please keep "Batu" in the subject line).</p>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© 2026 Batagor</span>
+    <a href="/batu/privacy/">Privacy Policy</a>
+  </div>
+</footer>
+
+</body>
+</html>
