@@ -1,11 +1,24 @@
 /* ============================================================
-   Shared site stylesheet — Batagor apps hub
-   Tokens below are the A Day theme (default). Another app can
-   override any of them with a body attribute, e.g.:
-     <body data-app="batu">  ->  [data-app="batu"]{ --blue: ...; }
+   Batagor — shared stylesheet
+   Themes are token sets scoped by [data-app]:
+     a-day (default) · batu · hub
+   Any element can opt into a theme (e.g. a Batu card sitting on an
+   A Day page) by carrying data-app and setting its own background/colour.
+   Page-specific styles live in hub.css, batu.css and stone.css.
 ============================================================ */
 
-:root{
+/* Cross-document view transitions: smooth page-to-page navigation, zero JS.
+   Browsers without support just navigate normally. */
+@view-transition{ navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root){ animation-duration: .35s; }
+
+/* Typed custom properties — let CSS animate counters and gradient angles. */
+@property --angle{ syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@property --h{ syntax: "<integer>"; inherits: false; initial-value: 22; }
+@property --free{ syntax: "<integer>"; inherits: false; initial-value: 14; }
+
+/* ---- Theme tokens ---- */
+:root, [data-app="a-day"]{
   --cream: #faf4e6;
   --cream-soft: #fefdfa;
   --ink: #1c1c1c;
@@ -16,7 +29,53 @@
   --yellow: #ffda85;
   --yellow-deep: #aa7d14;
   --mint: #d5ffe0;
+  --line: rgba(28,28,28,0.08);
+  --header-bg: rgba(250,244,230,0.85);
+  --btn-bg: linear-gradient(135deg, #5a90fa 0%, #0d2553 100%);
+  --btn-fg: #fefdfa;
+  --btn-shadow: rgba(13,37,83,0.5);
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-label: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
   --radius: 16px;
+}
+/* Batu: warm off-white, ink-black stone, serif voice (tokens from the app's design spec) */
+[data-app="batu"]{
+  --cream: #f7f5f1;
+  --cream-soft: #ffffff;
+  --ink: #1c1b1a;
+  --ink-soft: #6b6862;
+  --blue: #1c1b1a;
+  --blue-deep: #1c1b1a;
+  --blue-pale: #ecEAe3;
+  --yellow: #e3e0d8;
+  --yellow-deep: #6b6862;
+  --mint: #e4ede4;
+  --line: #e3e0d8;
+  --header-bg: rgba(247,245,241,0.88);
+  --btn-bg: #1c1b1a;
+  --btn-fg: #ffffff;
+  --btn-shadow: rgba(28,27,26,0.35);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-label: 'Inter', sans-serif;
+  --radius: 14px;
+}
+/* Hub: a neutral "gallery wall" so each app can bring its own colour */
+[data-app="hub"]{
+  --cream: #f3efe8;
+  --cream-soft: #fffdf9;
+  --ink: #1c1c1c;
+  --ink-soft: #5b5750;
+  --blue: #e9a23b;
+  --blue-deep: #7a4a0a;
+  --blue-pale: #f6e3bf;
+  --yellow: #f3c76b;
+  --yellow-deep: #9a6a12;
+  --line: rgba(28,28,28,0.1);
+  --header-bg: rgba(243,239,232,0.86);
+  --btn-bg: #1c1c1c;
+  --btn-fg: #fffdf9;
+  --btn-shadow: rgba(28,28,28,0.4);
 }
 
 *{ box-sizing: border-box; }
@@ -25,12 +84,12 @@ body{
   margin: 0;
   background: var(--cream);
   color: var(--ink);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
 }
 h1, h2, h3{
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-display);
   font-weight: 600;
   margin: 0;
   letter-spacing: -0.01em;
@@ -40,39 +99,90 @@ a{ color: inherit; }
 
 .wrap{ max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 
-header{
+/* ---- Header (shared by every page) ---- */
+.site-header{
   position: sticky; top: 0; z-index: 50;
-  background: rgba(250,244,230,0.85);
+  background: var(--header-bg);
   backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(28,28,28,0.06);
+  border-bottom: 1px solid var(--line);
+  view-transition-name: site-header;
 }
 .header-inner{
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 12px 24px;
 }
-.brand{ display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.brand img{ width: 32px; height: 32px; display: block; }
-.brand span{
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700; font-size: 19px; color: var(--ink);
+.crumbs{ display: flex; align-items: center; gap: 10px; min-width: 0; }
+.brand{
+  font-family: var(--font-display); font-weight: 700; font-size: 19px;
+  color: var(--ink); text-decoration: none;
 }
+.crumbs .sep{ color: var(--ink-soft); opacity: .45; }
+.app-name{
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-display); font-weight: 600; font-size: 17px;
+  text-decoration: none; color: var(--ink);
+}
+.app-name img{ width: 26px; height: 26px; border-radius: 7px; display: block; }
+.header-end{ display: flex; align-items: center; gap: 12px; }
+.switcher{
+  display: flex; gap: 2px; padding: 3px;
+  background: rgba(28,28,28,0.06); border-radius: 999px;
+}
+.switcher a{
+  padding: 7px 15px; border-radius: 999px;
+  font-size: 14px; font-weight: 600; text-decoration: none; color: var(--ink-soft);
+  font-family: 'Inter', sans-serif;
+  transition: color .15s ease, background .15s ease;
+}
+.switcher a:hover{ color: var(--ink); }
+.switcher a[aria-current="page"]{
+  background: var(--cream-soft); color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.14);
+}
+@media (max-width: 640px){
+  .header-inner{ padding: 10px 18px; }
+  .app-name, .crumbs .sep{ display: none; }
+  .header-end .btn{ display: none; }
+}
+
+/* ---- Buttons ---- */
 .btn{
   font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
   text-decoration: none; padding: 11px 20px; border-radius: 999px;
   display: inline-block; transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .btn-primary{
-  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%);
-  color: var(--cream-soft);
-  box-shadow: 0 8px 20px -8px rgba(13,37,83,0.5);
+  background: var(--btn-bg); color: var(--btn-fg);
+  box-shadow: 0 8px 20px -8px var(--btn-shadow);
 }
-.btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(13,37,83,0.55); }
+.btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 12px 24px -8px var(--btn-shadow); }
 .btn-small{ font-size: 13.5px; padding: 9px 18px; }
+.btn-ghost{ border: 1.5px solid var(--line); color: var(--ink); background: var(--cream-soft); }
+.btn-ghost:hover{ transform: translateY(-2px); }
 .badge-link{ display: inline-block; line-height: 0; transition: transform 0.15s ease; }
 .badge-link img{ height: 44px; width: auto; display: block; }
 .badge-link:hover{ transform: translateY(-2px); }
 .badge-link.large img{ height: 52px; }
+.text-link{ font-weight: 600; text-decoration: none; color: var(--blue-deep); }
+.text-link:hover{ text-decoration: underline; text-underline-offset: 4px; }
 
+/* ---- Live / in-review switch (driven by assets/config.js) ---- */
+html:not([data-batu-live]) [data-live-only]{ display: none; }
+html[data-batu-live] [data-review-only]{ display: none; }
+
+/* ---- Scroll-driven reveal: pure CSS, only where supported + motion allowed ---- */
+@media (prefers-reduced-motion: no-preference){
+  @supports (animation-timeline: view()){
+    .reveal{
+      animation: reveal both linear;
+      animation-timeline: view();
+      animation-range: entry 0% entry 50%;
+    }
+  }
+}
+@keyframes reveal{ from{ opacity: 0; transform: translateY(32px); } to{ opacity: 1; transform: none; } }
+
+/* ---- Hero (A Day + shared) ---- */
 .hero{ padding: 88px 0 72px; position: relative; overflow: hidden; }
 .hero-glow{
   position: absolute; top: -220px; right: -160px;
@@ -80,13 +190,18 @@ header{
   background: radial-gradient(circle at 35% 35%, var(--yellow) 0%, var(--blue) 55%, transparent 75%);
   opacity: 0.35; filter: blur(10px);
   pointer-events: none;
+  animation: sunrise 1.8s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes sunrise{
+  from{ transform: translateY(260px) scale(.7); opacity: 0; }
+  to{ transform: none; opacity: .35; }
 }
 .hero-grid{
   display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px;
   align-items: center; position: relative;
 }
 .eyebrow{
-  font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+  font-family: var(--font-label); font-weight: 600;
   font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase;
   color: var(--blue-deep);
   display: inline-flex; align-items: center; gap: 8px;
@@ -94,7 +209,8 @@ header{
   padding: 7px 14px 7px 10px; border-radius: 999px;
   margin-bottom: 22px;
 }
-.eyebrow .sunmark{ width: 14px; height: 14px; }
+.eyebrow .sunmark{ width: 14px; height: 14px; animation: spin 18s linear infinite; }
+@keyframes spin{ to{ transform: rotate(360deg); } }
 .hero h1{
   font-size: clamp(36px, 5vw, 56px); line-height: 1.06; margin-bottom: 22px;
 }
@@ -115,7 +231,9 @@ header{
   box-shadow: 0 40px 70px -30px rgba(13,37,83,0.45);
   position: relative;
   transform: rotate(-2deg);
+  animation: phone-in 1s .25s cubic-bezier(.2,.7,.2,1) both;
 }
+@keyframes phone-in{ from{ opacity: 0; transform: translateY(60px) rotate(-6deg); } to{ opacity: 1; transform: rotate(-2deg); } }
 .phone-screen{
   width: 100%; height: 100%;
   border-radius: 26px;
@@ -129,14 +247,23 @@ header{
   object-position: top center;
   display: block;
 }
+/* The pill counts down in pure CSS (typed custom property + counter). */
 .timer-pill{
   position: absolute; bottom: -16px; right: -14px;
   background: var(--ink); color: var(--yellow);
   padding: 9px 14px; border-radius: 999px;
-  font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600;
+  font-family: var(--font-display); font-size: 13px; font-weight: 600;
   box-shadow: 0 14px 28px -12px rgba(0,0,0,0.4);
+  animation: countdown 14s linear infinite;
 }
+.timer-pill b{ font-weight: inherit; counter-reset: h var(--h); }
+.timer-pill b::before{ content: counter(h); }
 .timer-pill span{ color: var(--cream); opacity: 0.6; font-size: 9.5px; font-weight: 500; display: block; letter-spacing: 0.05em; text-transform: uppercase; }
+@keyframes countdown{
+  0%{ --h: 24; }
+  80%{ --h: 0; }
+  100%{ --h: 0; }
+}
 
 @media (max-width: 860px){
   .wrap{ padding: 0 20px; }
@@ -149,10 +276,10 @@ header{
   .phone{ width: 180px; height: 374px; }
 }
 
-.section{ padding: 80px 0; border-top: 1px solid rgba(28,28,28,0.07); }
+.section{ padding: 80px 0; border-top: 1px solid var(--line); }
 @media (max-width: 860px){ .section{ padding: 52px 0; } }
 .section-label{
-  font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+  font-family: var(--font-label); font-weight: 600;
   font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase;
   color: var(--ink-soft); margin-bottom: 14px;
 }
@@ -170,7 +297,7 @@ header{
   top: -100px; right: -80px; opacity: 0.5;
 }
 .stat-number{
-  font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+  font-family: var(--font-display); font-weight: 700;
   font-size: 50px; color: var(--yellow); line-height: 1; margin-bottom: 12px; position: relative;
 }
 .stat-caption{ color: rgba(250,244,230,0.75); font-size: 14.5px; line-height: 1.6; position: relative; }
@@ -183,19 +310,19 @@ header{
 .timeline{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 44px; }
 .tl-step{
   background: var(--cream-soft);
-  border: 1px solid rgba(28,28,28,0.08);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 28px;
 }
 .tl-mark{
   width: 30px; height: 30px; border-radius: 50%;
   background: var(--blue-pale); color: var(--blue-deep);
-  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px;
+  font-family: var(--font-display); font-weight: 700; font-size: 13px;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 20px;
 }
 .tl-time{
-  font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 600;
+  font-family: var(--font-label); font-size: 12px; font-weight: 600;
   color: var(--ink-soft); margin-bottom: 6px; display: block;
 }
 .tl-step h3{ font-size: 19px; margin-bottom: 8px; }
@@ -203,6 +330,41 @@ header{
 @media (max-width: 860px){
   .timeline{ grid-template-columns: 1fr; gap: 18px; }
   .tl-step{ padding: 22px; }
+}
+
+/* Tiny CSS-only scenes on each timeline step */
+.tl-art{ height: 54px; margin-bottom: 18px; display: flex; align-items: center; }
+.art-lens{
+  position: relative; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--ink); box-shadow: inset 0 0 0 6px #3a3a3a;
+}
+.art-lens::before{
+  content: ""; position: absolute; inset: 14px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--blue), var(--blue-deep));
+}
+.art-lens::after{
+  content: ""; position: absolute; inset: -6px; border-radius: 50%;
+  border: 3px solid var(--yellow); opacity: 0;
+  animation: flash 3.6s ease-out infinite;
+}
+@keyframes flash{ 0%, 55%{ opacity: 0; transform: scale(.8); } 62%{ opacity: 1; } 100%{ opacity: 0; transform: scale(1.5); } }
+.art-bar{ width: 100%; height: 12px; border-radius: 99px; background: var(--blue-pale); overflow: hidden; }
+.art-bar i{
+  display: block; height: 100%; width: 100%; border-radius: 99px;
+  background: linear-gradient(90deg, var(--yellow), var(--blue));
+  transform-origin: left; animation: drain 6s linear infinite;
+}
+@keyframes drain{ 0%{ transform: scaleX(1); } 85%, 100%{ transform: scaleX(0); } }
+.art-snap{
+  width: 44px; height: 44px; border-radius: 10px;
+  background: linear-gradient(160deg, var(--yellow), var(--blue));
+  animation: vanish 4.5s ease-in infinite;
+}
+@keyframes vanish{
+  0%, 45%{ opacity: 1; filter: none; transform: none; }
+  70%{ opacity: 0; filter: blur(8px); transform: translateY(-10px) scale(.85); }
+  92%{ opacity: 0; }
+  100%{ opacity: 1; filter: none; transform: none; }
 }
 
 .privacy-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
@@ -229,23 +391,39 @@ header{
   font-size: clamp(28px, 4vw, 42px); max-width: 600px; margin: 0 auto 30px; line-height: 1.2; position: relative;
 }
 
-footer{ border-top: 1px solid rgba(28,28,28,0.07); padding: 30px 0; }
+/* ---- "Also by Batagor": cross-link card, themed per target app ---- */
+.also{ padding: 8px 0 72px; }
+.also .section-label{ margin-bottom: 16px; }
+.also-card{
+  display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+  background: var(--cream); color: var(--ink); font-family: var(--font-body);
+  border: 1px solid var(--line); border-radius: 24px; padding: 26px 30px;
+  text-decoration: none; position: relative;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.also-card:hover{ transform: translateY(-3px); box-shadow: 0 22px 36px -26px rgba(0,0,0,.45); }
+.also-card h3{ font-size: 24px; }
+.also-card p{ margin: 4px 0 0; color: var(--ink-soft); font-size: 15px; max-width: 460px; }
+.also-card .also-mark{ flex: none; width: 84px; display: flex; justify-content: center; }
+.also-card .also-copy{ flex: 1 1 260px; }
+.also-card .go{ font-weight: 600; color: var(--blue-deep); font-size: 14.5px; }
+
+/* ---- Footer ---- */
+footer{ border-top: 1px solid var(--line); padding: 30px 0; }
 .footer-inner{
-  display: flex; justify-content: center; align-items: center;
+  display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;
   font-size: 13px; color: var(--ink-soft);
 }
 .footer-inner a{ text-decoration: none; color: var(--ink-soft); }
 .footer-inner a:hover{ color: var(--ink); }
-.footer-links{ display: flex; gap: 20px; }
+.footer-links{ display: flex; gap: 20px; flex-wrap: wrap; }
 
 @media (prefers-reduced-motion: reduce){
-  *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+  *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
 }
 
 @media (max-width: 480px){
   .wrap{ padding: 0 18px; }
-  .header-inner{ padding: 12px 18px; }
-  .brand span{ font-size: 17px; }
   .hero h1{ font-size: 32px; }
   .hero p.lede{ font-size: 16px; }
   .phone{ width: 160px; height: 332px; }
@@ -255,55 +433,10 @@ footer{ border-top: 1px solid rgba(28,28,28,0.07); padding: 30px 0; }
   .problem-grid h2{ font-size: 24px; }
 }
 
-/* ---- Per-app theme hooks (override tokens only) ---- */
-[data-app="a-day"]{ /* default theme — values live in :root */ }
-[data-app="batu"]{
-  /* Batu reuses the A Day tokens for now (no brand palette decided).
-     To theme Batu, override tokens here, e.g.:
-       --blue: ...; --blue-deep: ...; --blue-pale: ...; --yellow: ...; */
-}
-
-/* ---- Shared header/footer additions ---- */
-.brand{
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700; font-size: 19px; color: var(--ink);
-}
-.footer-inner{ gap: 20px; flex-wrap: wrap; }
-.footer-links{ gap: 20px; flex-wrap: wrap; }
-
-/* ---- Hub (root index) ---- */
-.hub-hero{ padding: 72px 0 40px; position: relative; overflow: hidden; }
-.hub-hero .hero-glow{ top: -260px; right: -200px; }
-.hub-hero h1{ font-size: clamp(34px, 5vw, 52px); line-height: 1.08; margin-bottom: 16px; position: relative; }
-.hub-hero p.lede{ font-size: 17.5px; color: var(--ink-soft); max-width: 520px; margin: 0; position: relative; }
-.app-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; padding-bottom: 96px; position: relative; }
-.app-card{
-  display: flex; flex-direction: column; gap: 14px;
-  background: var(--cream-soft);
-  border: 1px solid rgba(28,28,28,0.08);
-  border-radius: var(--radius);
-  padding: 28px; text-decoration: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-.app-card:hover{ transform: translateY(-2px); box-shadow: 0 16px 30px -18px rgba(13,37,83,0.45); }
-.app-icon{ width: 64px; height: 64px; border-radius: 15px; display: block; }
-.app-icon.placeholder{
-  background: var(--blue-pale); color: var(--blue-deep);
-  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 28px;
-  display: flex; align-items: center; justify-content: center;
-}
-.app-card h2{ font-size: 24px; }
-.app-card p{ margin: 0; color: var(--ink-soft); font-size: 15px; }
-.app-card .go{ margin-top: auto; font-size: 14px; font-weight: 600; color: var(--blue-deep); }
-@media (max-width: 860px){
-  .hub-hero{ padding: 48px 0 28px; }
-  .app-grid{ grid-template-columns: 1fr; gap: 16px; padding-bottom: 64px; }
-  .app-card{ padding: 22px; }
-}
-
 /* ---- Document pages (privacy / support) — scoped to body.doc ---- */
-.doc header{ position: static; background: none; backdrop-filter: none; }
+.doc .site-header{ position: static; background: none; backdrop-filter: none; }
 .doc .wrap{ max-width: 720px; }
+.doc .site-header .wrap{ max-width: 1120px; }
 .doc main{ padding: 56px 0 72px; }
 .doc h1{ font-size: 36px; line-height: 1.15; margin-bottom: 8px; }
 .doc h2{ font-size: 21px; margin: 36px 0 8px; }
@@ -315,23 +448,25 @@ footer{ border-top: 1px solid rgba(28,28,28,0.07); padding: 30px 0; }
 .doc .meta{ color: var(--ink-soft); font-size: 14px; margin-bottom: 28px; }
 .doc .summary{ background: rgba(13,37,83,0.06); border-radius: 12px; padding: 14px 18px; margin-bottom: 14px; }
 .doc .summary p{ margin: 0; }
+[data-app="batu"].doc .summary{ background: var(--blue-pale); }
 @media (max-width: 480px){
   .doc h1{ font-size: 30px; }
 }
 
 /* ---- Changelog (releases) — scoped to body.changelog ---- */
+.changelog .site-header .wrap{ max-width: 1120px; }
 .changelog .cl-head{ padding: 64px 0 24px; }
 .changelog .cl-head h1{ font-size: clamp(34px, 5vw, 48px); line-height: 1.08; margin-bottom: 12px; }
 .changelog .cl-head p{ margin: 0; font-size: 17px; color: var(--ink-soft); max-width: 520px; }
 .cl-list{ padding-bottom: 96px; }
 .cl-entry{
   display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 48px;
-  padding: 48px 0; border-top: 1px solid rgba(28,28,28,0.07);
+  padding: 48px 0; border-top: 1px solid var(--line);
 }
 .cl-entry{ scroll-margin-top: 56px; }
 .cl-meta{ position: sticky; top: 88px; align-self: start; }
 .cl-version{
-  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 22px;
+  font-family: var(--font-display); font-weight: 700; font-size: 22px;
   color: var(--ink); text-decoration: none; display: inline-block;
 }
 .cl-version:hover{ color: var(--blue-deep); text-decoration: underline; text-underline-offset: 4px; }
@@ -340,9 +475,9 @@ footer{ border-top: 1px solid rgba(28,28,28,0.07); padding: 30px 0; }
 .cl-body h2{ font-size: clamp(24px, 3vw, 30px); line-height: 1.2; margin-bottom: 10px; }
 .cl-summary{ margin: 0 0 24px; font-size: 16.5px; color: var(--ink-soft); }
 .cl-img{ margin: 0 0 28px; }
-.cl-img img{ width: 100%; height: auto; display: block; border-radius: var(--radius); border: 1px solid rgba(28,28,28,0.08); }
+.cl-img img{ width: 100%; height: auto; display: block; border-radius: var(--radius); border: 1px solid var(--line); }
 .cl-group{
-  font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+  font-family: var(--font-label); font-weight: 600;
   font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase;
   color: var(--blue-deep); margin: 28px 0 10px;
 }
@@ -357,14 +492,3 @@ footer{ border-top: 1px solid rgba(28,28,28,0.07); padding: 30px 0; }
   .cl-date{ margin-top: 0; }
   .cl-list{ padding-bottom: 64px; }
 }
-
-/* ---- Coming-soon label (hub card + app placeholder) ---- */
-.soon-pill{
-  align-self: flex-start; margin-top: auto;
-  font-family: 'Space Grotesk', sans-serif; font-weight: 600;
-  font-size: 12.5px; letter-spacing: 0.04em; text-transform: uppercase;
-  color: var(--blue-deep); background: var(--blue-pale);
-  padding: 6px 12px; border-radius: 999px;
-}
-.soon-links{ display: flex; gap: 20px; margin-top: 28px; font-size: 15px; font-weight: 500; position: relative; }
-.soon-links a{ color: var(--blue-deep); }

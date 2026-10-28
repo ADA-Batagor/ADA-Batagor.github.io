@@ -1,0 +1,111 @@
+/* ============================================================
+   Batu's stone + the reserve/release loop, drawn in pure CSS.
+   Shared by the hub, the Batu page and the "also by" cards.
+   Shape follows the app's design tokens: asymmetric rounded blob,
+   soft highlight, shadow beneath. Static state (reduced motion) =
+   "10 GB, tucked away."
+============================================================ */
+
+.stone{
+  position: relative;
+  width: var(--sw, 170px);
+  height: calc(var(--sw, 170px) * 0.812);
+  background: #1c1b1a;
+  border-radius: 46% 44% 42% 48% / 44% 42% 52% 52%;
+  box-shadow: 0 calc(var(--sw, 170px) * .09) calc(var(--sw, 170px) * .12) calc(var(--sw, 170px) * -.07) rgba(28,27,26,.45);
+  transform-origin: 50% 100%;
+}
+.stone::before{
+  content: ""; position: absolute; left: 16%; top: 13%;
+  width: 26%; height: 19%; border-radius: 50%;
+  background: rgba(255,255,255,.14);
+}
+.stone--mini{ --sw: 64px; }
+
+/* Tap-style wiggle on hover/focus for stones that are just sitting there */
+.stone--tap{ cursor: pointer; animation: breathe 6s ease-in-out infinite; }
+.stone--tap:hover, .stone--tap:focus-visible{ animation: wiggle .55s ease-in-out; }
+@keyframes breathe{ 0%, 100%{ transform: scale(1); } 50%{ transform: scale(1.018, .985); } }
+@keyframes wiggle{
+  0%{ transform: rotate(0); }
+  25%{ transform: rotate(-5deg) scale(1.03); }
+  60%{ transform: rotate(3.5deg); }
+  100%{ transform: rotate(0); }
+}
+
+/* Ghost = the "nothing reserved" outline */
+.stone.ghost{
+  background: none; box-shadow: none;
+  border: 2px dashed #b9b6ae;
+  opacity: 0;
+}
+.stone.ghost::before{ display: none; }
+
+/* ---- The loop: reserve -> tucked away -> release -> space is back ---- */
+.demo{ display: flex; flex-direction: column; align-items: center; gap: 18px; width: 100%; max-width: 340px; }
+.demo-stage{
+  position: relative; width: 100%;
+  height: calc(var(--sw, 170px) * .812 + 54px);
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.demo-stage .stone{ position: absolute; bottom: 14px; left: 50%; margin-left: calc(var(--sw, 170px) / -2); }
+.demo-stage .ghost{ animation: ghost-cycle 10s ease-in-out infinite; }
+.demo-stage .demo-stone{ animation: stone-cycle 10s cubic-bezier(.3,.7,.3,1) infinite; }
+.demo-caption{ display: grid; text-align: center; min-height: 3.2em; }
+.demo-caption span{ grid-area: 1 / 1; font-family: var(--font-display); font-weight: 600; font-size: 21px; line-height: 1.25; }
+.cap-b{ opacity: 0; }
+.demo-caption .cap-a{ animation: cap-a 10s ease-in-out infinite; }
+.demo-caption .cap-b{ animation: cap-b 10s ease-in-out infinite; }
+.demo-sub{ display: block; font-family: var(--font-body); font-weight: 400; font-size: 13.5px; color: var(--ink-soft); margin-top: 4px; }
+
+.demo-bar{
+  position: relative; width: 100%; height: 10px; border-radius: 99px;
+  background: #e3e0d8; overflow: hidden; display: flex;
+}
+.demo-bar .used{ width: 62%; background: #b9b6ae; }
+.demo-bar .held{ width: 16%; background: #1c1b1a; animation: held-cycle 10s ease-in-out infinite; }
+.demo-free{
+  align-self: stretch; display: flex; justify-content: space-between;
+  font-size: 12.5px; color: var(--ink-soft); margin-top: -8px;
+  animation: free-cycle 10s ease-in-out infinite;
+}
+.demo-free b{ font-weight: 600; color: var(--ink); counter-reset: free var(--free); }
+.demo-free b::before{ content: counter(free) " GB free"; }
+.demo--mini{ --sw: 112px; }
+.demo--mini .demo-bar, .demo--mini .demo-free{ display: none; }
+.demo--mini .demo-caption span{ font-size: 18px; }
+
+@keyframes stone-cycle{
+  0%{ opacity: 0; transform: translateY(-70px) scale(.92, 1.1); }
+  9%{ opacity: 1; transform: translateY(0) scale(1.07, .92); }
+  13%{ transform: scale(.99, 1.02); }
+  16%{ transform: none; }
+  50%{ opacity: 1; transform: none; }
+  58%{ opacity: 0; transform: translateY(-54px) scale(.86); }
+  100%{ opacity: 0; transform: translateY(-70px) scale(.92, 1.1); }
+}
+@keyframes ghost-cycle{
+  0%, 52%{ opacity: 0; }
+  62%, 90%{ opacity: 1; }
+  96%, 100%{ opacity: 0; }
+}
+@keyframes cap-a{
+  0%, 8%{ opacity: 0; transform: translateY(6px); }
+  15%, 48%{ opacity: 1; transform: none; }
+  54%, 100%{ opacity: 0; transform: translateY(-6px); }
+}
+@keyframes cap-b{
+  0%, 56%{ opacity: 0; transform: translateY(6px); }
+  63%, 90%{ opacity: 1; transform: none; }
+  96%, 100%{ opacity: 0; transform: translateY(-6px); }
+}
+@keyframes held-cycle{
+  0%, 8%{ width: 0; }
+  16%, 50%{ width: 16%; }
+  58%, 100%{ width: 0; }
+}
+@keyframes free-cycle{
+  0%, 8%{ --free: 24; }
+  16%, 50%{ --free: 14; }
+  58%, 100%{ --free: 24; }
+}
