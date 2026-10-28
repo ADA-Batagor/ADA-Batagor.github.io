@@ -8,49 +8,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --cream: #faf4e6;
-    --ink: #1c1c1c;
-    --ink-soft: #53514d;
-    --blue-deep: #0d2553;
-  }
-  *{ box-sizing: border-box; }
-  body{
-    margin: 0; background: var(--cream); color: var(--ink);
-    font-family: 'Inter', sans-serif; line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-  h1, h2{ font-family: 'Space Grotesk', sans-serif; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
-  a{ color: var(--blue-deep); }
-  :focus-visible{ outline: 2px solid var(--blue-deep); outline-offset: 3px; }
-  .wrap{ max-width: 720px; margin: 0 auto; padding: 0 24px; }
-  header{ border-bottom: 1px solid rgba(28,28,28,0.06); }
-  .header-inner{ display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 720px; margin: 0 auto; }
-  .brand{ font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 19px; color: var(--ink); text-decoration: none; }
-  main{ padding: 56px 0 72px; }
-  h1{ font-size: 36px; line-height: 1.15; margin-bottom: 8px; }
-  h2{ font-size: 21px; margin: 36px 0 8px; }
-  p, li{ font-size: 16px; }
-  p{ margin: 0 0 14px; }
-  ul{ padding-left: 22px; margin: 0 0 14px; }
-  li{ margin-bottom: 6px; }
-  .meta{ color: var(--ink-soft); font-size: 14px; margin-bottom: 28px; }
-  footer{ border-top: 1px solid rgba(28,28,28,0.07); padding: 30px 0; }
-  .footer-inner{ display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; font-size: 13px; color: var(--ink-soft); }
-  .footer-inner a{ text-decoration: none; color: var(--ink-soft); }
-  .footer-inner a:hover{ color: var(--ink); }
-  @media (max-width: 480px){
-    .wrap{ padding: 0 18px; }
-    .header-inner{ padding: 12px 18px; }
-    h1{ font-size: 30px; }
-  }
-</style>
+<link rel="stylesheet" href="/assets/site.css">
 </head>
-<body>
+<body class="doc" data-app="batu">
 
 <header>
-  <div class="header-inner">
+  <div class="wrap header-inner">
     <span class="brand">Batu</span>
   </div>
 </header>
@@ -86,7 +49,10 @@
 <footer>
   <div class="wrap footer-inner">
     <span>© 2026 Batagor</span>
-    <a href="/batu/support/">Support</a>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="/batu/support/">Support</a>
+      <a href="/batu/privacy/">Privacy</a>
+    </nav>
   </div>
 </footer>
 
