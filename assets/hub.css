@@ -145,6 +145,13 @@
   .principles li::before{ left: 18px; top: 18px; }
 }
 
+/* ---- Contact ---- */
+.contact{ text-align: left; }
+.contact h2{ font-size: clamp(26px, 3.2vw, 36px); line-height: 1.15; margin-bottom: 16px; }
+.contact p{ font-size: 17px; color: var(--ink-soft); margin: 0 0 24px; max-width: 520px; }
+.contact .btn{ white-space: nowrap; max-width: 100%; }
+@media (max-width: 480px){ .contact .btn{ font-size: 14px; padding-inline: 20px; } }
+
 /* ---- Team (hidden until the whole team agrees; remove the hidden attribute to show) ---- */
 .team[hidden]{ display: none; }
 .team h2{ font-size: clamp(26px, 3.2vw, 36px); margin-bottom: 28px; }
