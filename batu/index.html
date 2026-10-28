@@ -3,46 +3,170 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Batu — Coming soon</title>
-<meta name="description" content="Batu lets you set aside storage as a reserve, then release it at any time to free up space instantly. Coming soon.">
+<title>Batu — Storage you set aside</title>
+<meta name="description" content="Batu sets aside storage as a reserve, then releases it at any time to free up space instantly. For iPhone, iPad and Mac. Now in App Store review.">
 <link rel="canonical" href="https://ada-batagor.github.io/batu/">
 
-<meta property="og:title" content="Batu — Coming soon">
-<meta property="og:description" content="Batu lets you set aside storage as a reserve, then release it at any time to free up space instantly. Coming soon.">
-<meta property="og:image" content="https://ada-batagor.github.io/assets/logo.png">
+<meta property="og:title" content="Batu — Storage you set aside">
+<meta property="og:description" content="Set some storage aside. When you need room, release it. Space is back, instantly.">
+<meta property="og:image" content="https://ada-batagor.github.io/assets/batu-home.webp">
 <meta property="og:url" content="https://ada-batagor.github.io/batu/">
 <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<script src="/assets/config.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/stone.css">
+<link rel="stylesheet" href="/assets/batu.css">
 </head>
 <body data-app="batu">
 
-<header>
+<header class="site-header">
   <div class="wrap header-inner">
-    <a href="/batu/" class="brand"><span>Batu</span></a>
+    <nav class="crumbs" aria-label="Batagor">
+      <a href="/" class="brand">Batagor</a>
+      <span class="sep" aria-hidden="true">/</span>
+      <a href="/batu/" class="app-name" aria-current="page">Batu</a>
+    </nav>
+    <nav class="switcher" aria-label="Apps">
+      <a href="/a-day/">A Day</a>
+      <a href="/batu/" aria-current="page">Batu</a>
+    </nav>
   </div>
 </header>
 
-<section class="hub-hero">
-  <div class="hero-glow" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="eyebrow">Coming soon</div>
-    <h1>Batu</h1>
-    <p class="lede">Set aside storage as a reserve, then release it at any time to free up space instantly.</p>
-    <nav class="soon-links" aria-label="Batu">
-      <a href="/batu/support/">Support</a>
-      <a href="/batu/privacy/">Privacy</a>
-    </nav>
+<main>
+
+<section class="batu-hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">
+        <span class="dot" data-review-only></span><span data-review-only>In review with Apple</span>
+        <span class="dot live" data-live-only></span><span data-live-only>Now on the App Store</span>
+      </div>
+      <h1>Batu.</h1>
+      <p class="lede">It piles up quietly, so you don't run out when it counts.</p>
+      <p class="sub">Set some storage aside. When you need room, release it, and the space is back, instantly.</p>
+
+      <div data-live-only>
+        <a data-appstore="batu" href="#" class="badge-link large"><img src="/assets/app-store-badge.svg" alt="Download on the App Store"></a>
+      </div>
+      <div class="review-note" data-review-only>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span><b>Waiting on App Store review.</b> The download button will appear right here once Apple says yes.</span>
+      </div>
+      <nav class="batu-links" aria-label="Batu">
+        <a href="/batu/support/">Support</a>
+        <a href="/batu/privacy/">Privacy</a>
+      </nav>
+    </div>
+
+    <div class="batu-stage" aria-hidden="true">
+      <div class="demo">
+        <div class="demo-stage">
+          <div class="stone ghost"></div>
+          <div class="stone demo-stone"></div>
+        </div>
+        <div class="demo-caption"><span class="cap-a">10 GB, tucked away.</span><span class="cap-b">Space is back.</span></div>
+        <div class="demo-bar"><i class="used"></i><i class="held"></i></div>
+        <div class="demo-free"><span>Illustration</span><b></b></div>
+      </div>
+    </div>
   </div>
 </section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-label">How it works</div>
+    <h2>Reserve, release, repeat.</h2>
+    <div class="cycle">
+      <div class="cycle-card reveal">
+        <div class="cycle-art" aria-hidden="true"><div class="mini-slider"><i></i></div></div>
+        <h3>Reserve</h3>
+        <p>Pick how much to hold, as a percentage or a size in GB. Batu sets it aside and settles in.</p>
+      </div>
+      <div class="cycle-arrow" aria-hidden="true">→</div>
+      <div class="cycle-card reveal">
+        <div class="cycle-art" aria-hidden="true"><span class="held-pill">Reserved and ready</span></div>
+        <h3>Tucked away</h3>
+        <p>The space stays held, quietly, until you say otherwise. Batu never touches your photos or files.</p>
+      </div>
+      <div class="cycle-arrow back" aria-hidden="true">→</div>
+      <div class="cycle-card reveal">
+        <div class="cycle-art" aria-hidden="true"><span class="release-btn">Release</span></div>
+        <h3>Release</h3>
+        <p>Out of room? One tap and the space is back, instantly. Then reserve again whenever you like.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-label">The app</div>
+    <h2>One stone. One screen at a time.</h2>
+    <div class="screens">
+      <figure class="reveal"><img src="/assets/batu-picker.webp" width="520" height="1130" loading="lazy" alt="Batu's reserve picker: a slider to choose how much storage to hold"><figcaption>Choose how much to hold</figcaption></figure>
+      <figure class="reveal"><img src="/assets/batu-home.webp" width="520" height="1130" loading="lazy" alt="Batu's home screen: a black stone with the text 10 GB, tucked away"><figcaption>Reserved and ready</figcaption></figure>
+      <figure class="reveal"><img src="/assets/batu-back.webp" width="520" height="1130" loading="lazy" alt="Batu after releasing: the message that space is back"><figcaption>Space is back</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-label">Made to be trusted</div>
+    <h2>Quiet by design.</h2>
+    <div class="trust-grid">
+      <div class="trust-item reveal">
+        <h3>Nothing leaves your device</h3>
+        <p>No account, no analytics, no ads, no network requests.</p>
+      </div>
+      <div class="trust-item reveal">
+        <h3>Your files stay yours</h3>
+        <p>The reserve is a single placeholder file inside Batu's own container. Batu doesn't read your photos or anything else.</p>
+      </div>
+      <div class="trust-item reveal">
+        <h3>iPhone, iPad and Mac</h3>
+        <p>The same stone on all three.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section batu-final">
+  <div class="wrap">
+    <h2 data-review-only>Soon, you'll have room to spare.</h2>
+    <h2 data-live-only>Out of space? Batu's been waiting for this.</h2>
+    <a data-live-only data-appstore="batu" href="#" class="badge-link large"><img src="/assets/app-store-badge.svg" alt="Download on the App Store"></a>
+  </div>
+</section>
+
+<section class="also">
+  <div class="wrap">
+    <div class="section-label">Also by Batagor</div>
+    <a class="also-card" data-app="a-day" href="/a-day/">
+      <div class="also-mark"><img src="/assets/logo.png" alt="" width="72" height="72" style="border-radius:16px;display:block"></div>
+      <div class="also-copy">
+        <h3>A Day</h3>
+        <p>A camera that doesn't hang onto anything. Every photo disappears after 24 hours.</p>
+      </div>
+      <span class="go">Visit A Day →</span>
+    </a>
+  </div>
+</section>
+
+</main>
 
 <footer>
   <div class="wrap footer-inner">
     <span>© 2026 Batagor</span>
     <nav class="footer-links" aria-label="Footer">
+      <a href="/">Batagor</a>
       <a href="/batu/support/">Support</a>
       <a href="/batu/privacy/">Privacy</a>
     </nav>
