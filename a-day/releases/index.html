@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!--
+  ADD A RELEASE: copy the block below, paste it directly under the
+  "NEW ENTRIES BELOW" marker in <main> (newest stays on top), and fill it in.
+  Delete any group (New / Improved / Fixed) you do not need, and the <figure>
+  if there is no image. Use the version with dashes for the id (1.2.0 = 1-2-0).
+  Write for end users: no PR numbers, no internal or build details.
+
+  <article class="cl-entry" id="1-2-0">
+    <div class="cl-meta">
+      <a class="cl-version" href="#1-2-0">1.2.0</a>
+      <time class="cl-date" datetime="2026-12-01">1 Dec 2026</time>
+    </div>
+    <div class="cl-body">
+      <h2>Release title</h2>
+      <p class="cl-summary">One sentence on what this release is about.</p>
+      <figure class="cl-img"><img src="/assets/releases/1-2-0.png" alt="Describe the image" loading="lazy"></figure>
+      <h3 class="cl-group">New</h3>
+      <ul>
+        <li><strong>Feature name.</strong> What it does for the user.</li>
+      </ul>
+      <h3 class="cl-group">Improved</h3>
+      <ul>
+        <li>What got better.</li>
+      </ul>
+      <h3 class="cl-group">Fixed</h3>
+      <ul>
+        <li>What no longer goes wrong.</li>
+      </ul>
+    </div>
+  </article>
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Releases — A Day</title>
+<meta name="description" content="What's new in A Day: release notes for every version of the camera app whose snaps disappear after 24 hours.">
+<link rel="canonical" href="https://ada-batagor.github.io/a-day/releases/">
+
+<meta property="og:title" content="Releases — A Day">
+<meta property="og:description" content="What's new in A Day: release notes for every version.">
+<meta property="og:image" content="https://ada-batagor.github.io/assets/logo.png">
+<meta property="og:url" content="https://ada-batagor.github.io/a-day/releases/">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body class="changelog" data-app="a-day">
+
+<header>
+  <div class="wrap header-inner">
+    <a href="/a-day/" class="brand"><img src="/assets/logo.png" alt="A Day logo"><span>A Day</span></a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="cl-head">
+    <h1>Releases</h1>
+    <p>What's new in A Day, newest first.</p>
+  </div>
+
+  <div class="cl-list">
+    <!-- NEW ENTRIES BELOW -->
+
+    <article class="cl-entry" id="1-1-0">
+      <div class="cl-meta">
+        <a class="cl-version" href="#1-1-0">1.1.0</a>
+        <time class="cl-date" datetime="2026-09-30">30 Sep 2026</time>
+      </div>
+      <div class="cl-body">
+        <h2>Liquid Glass, Settings and a Lock Screen widget</h2>
+        <p class="cl-summary">A new look for iOS 26, plus a Settings screen, a Lock Screen widget, flash control and clearer permission handling.</p>
+        <h3 class="cl-group">New</h3>
+        <ul>
+          <li><strong>Settings.</strong> Open it from the gear in the Home toolbar. The Photos and Location rows show their current permission status. "Contact us" opens Mail with the subject filled in, or offers to copy our email address if no Mail account is set up.</li>
+          <li><strong>Lock Screen widget.</strong> It has three modes, chosen with long-press → Edit Widget: Open Camera, Time Left (a live countdown to your newest snap's expiry) and Today's Count (a gauge against the 24-snap limit). It comes in circular, rectangular and inline sizes.</li>
+          <li><strong>Flash.</strong> Switch between off, auto and on for photos and videos, from a button in the camera preview.</li>
+          <li><strong>Media info.</strong> Swipe up in the Detail view to see a snap's details.</li>
+          <li><strong>Save to Photos.</strong> Export a snap from the Detail toolbar, the selection bar, or a long-press on a gallery card.</li>
+          <li><strong>Camera and microphone permissions.</strong> If you deny one, a full-screen alert offers a shortcut to iOS Settings. While another app is using the camera or microphone (a video call, say), photos still work like the system Camera, and video recording is blocked with an explanation instead of failing silently.</li>
+          <li><strong>"Location Off" vs "Location Unavailable".</strong> A snap without a place name now shows why. The app and the widget use the same label.</li>
+        </ul>
+        <h3 class="cl-group">Improved</h3>
+        <ul>
+          <li><strong>Liquid Glass design on iOS 26</strong> across Camera, Detail and Home, including toolbars, the shutter and capture buttons, the selection bar and alerts. Earlier iOS versions use a fallback style.</li>
+          <li><strong>Home screen.</strong> "Today" sits below the toolbar and the empty gap above the first card is gone. In select mode the gear hides, the count reads "1 Snap selected" or "N Snaps selected", and selected cards get a ring.</li>
+          <li><strong>Confirmations.</strong> Share and delete confirmations now appear next to the control you tapped. Bulk delete looks destructive, and bulk share and delete dim while nothing is selected.</li>
+          <li><strong>Light appearance.</strong> A Day stays in its light look even when your iPhone is in Dark Mode, so controls and status bar text stay readable.</li>
+          <li><strong>Permission messages.</strong> The Camera, Microphone and Photos alerts are rewritten in clearer wording. The Camera alert no longer mentions the microphone, and an "always" location permission the app never used is no longer declared.</li>
+        </ul>
+        <h3 class="cl-group">Fixed</h3>
+        <ul>
+          <li>Camera preview lag on iPhones with multiple cameras.</li>
+          <li>Detail view scrolling. The main preview now follows the bottom selector while you drag it, and the two no longer stutter or blink. Deleting the last snap from inside Detail closes it instead of leaving a blank screen.</li>
+          <li>Background cleanup of expired snaps now runs as scheduled.</li>
+          <li>Glass controls no longer flash when you toggle select mode or open swipe-to-delete.</li>
+          <li>The Home title no longer stays hidden after you scroll back to the top. The swipe-to-delete button now shrinks with its card. Tapping a selected card, checkmark included, deselects it.</li>
+          <li>Detail view gestures work on iOS 26.</li>
+          <li>The black overlay shown during capture now sits where it should.</li>
+          <li>The Select button uses the app's typeface.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="cl-entry" id="1-0-1">
+      <div class="cl-meta">
+        <a class="cl-version" href="#1-0-1">1.0.1</a>
+        <time class="cl-date" datetime="2025-11-26">26 Nov 2025</time>
+      </div>
+      <div class="cl-body">
+        <h2>Share a single snap, smoother Detail scrolling</h2>
+        <p class="cl-summary">A bug-fix update focused on scrolling in the Detail view, plus a share button there.</p>
+        <h3 class="cl-group">New</h3>
+        <ul>
+          <li><strong>Share a single snap</strong> from a share button in the Detail view.</li>
+        </ul>
+        <h3 class="cl-group">Fixed</h3>
+        <ul>
+          <li>The Detail carousel scrolled in the wrong direction and could leave the main preview out of sync. A video no longer disappears after you drag the carousel.</li>
+          <li>Thumbnail scrolling and the thumbnail button in the Detail view.</li>
+          <li>Layout and colours no longer break when your iPhone is in Dark Mode.</li>
+          <li>Clearer wording on the delete confirmation.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="cl-entry" id="1-0">
+      <div class="cl-meta">
+        <a class="cl-version" href="#1-0">1.0</a>
+        <time class="cl-date" datetime="2025-11-21">21 Nov 2025</time>
+      </div>
+      <div class="cl-body">
+        <h2>A Day is here</h2>
+        <p class="cl-summary">A camera for snaps that expire: up to 24 a day, each deleted automatically once its time is up.</p>
+        <h3 class="cl-group">New</h3>
+        <ul>
+          <li><strong>Snaps that expire.</strong> Every snap is deleted automatically when its time is up, and each one shows a running "time left".</li>
+          <li><strong>Camera.</strong> Photo and video capture with a capture animation and haptic feedback, pinch to zoom, tap to focus, and a recording length limit. Capture orientation follows your device.</li>
+          <li><strong>Daily limit of 24 snaps.</strong> The shutter is disabled once you reach it, with a warning that explains why.</li>
+          <li><strong>Gallery.</strong> The home screen lists the day's snaps with their remaining time, place name and, for videos, duration. You can select several to share or delete at once, and deleting asks for confirmation first.</li>
+          <li><strong>Detail view.</strong> Full-screen photo and video playback, a thumbnail carousel to move between snaps, pinch to zoom, and swipe down to close. Playback pauses when you move to another snap.</li>
+          <li><strong>Widgets.</strong> Small and medium Home Screen widgets show the day's snaps, and a capture button in Control Center is available too. Both open straight to the camera.</li>
+          <li><strong>Place names.</strong> A snap can show where it was taken.</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© 2026 A Day — made by Batagor</span>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="/a-day/support/">Support</a>
+      <a href="/a-day/privacy/">Privacy</a>
+      <a href="/a-day/releases/">Releases</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
