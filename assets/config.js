@@ -1,7 +1,7 @@
 /* ============================================================
    Batagor site config — the only place to edit when things change.
 
-   When Batu is approved on the App Store, paste its link into
+   Batu is live on the App Store; its link is set in
    batu.appStoreUrl below. Every "In review" label across the site
    flips to the live state and the download badge appears. Nothing
    else needs touching.
@@ -13,7 +13,7 @@
       rating: "5.0"
     },
     batu: {
-      appStoreUrl: ""   // <- paste the Batu App Store link here once it's live
+      appStoreUrl: "https://apps.apple.com/app/batu/id6825723999"
     }
   };
 
